@@ -1,0 +1,31 @@
+<div class="profile-container">
+  <h2 class="section-title">Authority Profile</h2>
+  
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <%= @authority.name[0].upcase %>
+      </div>
+      <div class="profile-name">
+        <%= @authority.name %>
+      </div>
+    </div>
+    
+    <div class="profile-details">
+      <div class="detail-item">
+        <div class="detail-label">Email</div>
+        <div class="detail-value"><%= @authority.email %></div>
+      </div>
+      
+      <div class="detail-item">
+        <div class="detail-label">Role</div>
+        <div class="detail-value"><%= @authority.role %></div>
+      </div>
+    </div>
+    
+    <div class="profile-actions">
+      <%= link_to 'Edit Profile', edit_authority_profile_path, class: 'btn-primary' %>
+      <%= link_to 'Back to Dashboard', authority_dashboard_path, class: 'btn-secondary' %>
+    </div>
+  </div>
+</div>

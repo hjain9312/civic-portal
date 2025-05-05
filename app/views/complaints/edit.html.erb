@@ -1,0 +1,46 @@
+<!-- edit.html.erb -->
+<div class="complaint-edit-form">
+  <h2>Edit Complaint</h2>
+  
+  <%= form_for @complaint do |f| %>
+    <div class="form-group">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Enter complaint title" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control", placeholder: "Describe the issue", rows: 4 %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :complaint_type_id, "Complaint Type" %>
+      <%= f.collection_select :complaint_type_id, ComplaintType.all, :id, :name, { prompt: "Select Complaint Type" }, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :address %>
+      <%= f.text_field :address, class: "form-control", placeholder: "Enter address" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :latitude %>
+      <%= f.text_field :latitude, class: "form-control", placeholder: "Latitude" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :longitude %>
+      <%= f.text_field :longitude, class: "form-control", placeholder: "Longitude" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :proof_image, "Upload Proof Image" %>
+      <%= f.file_field :proof_image, class: "form-control" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Update Complaint", class: "btn btn-primary" %>
+      <%= link_to "Cancel", complaint_path(@complaint), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

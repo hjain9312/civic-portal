@@ -1,0 +1,72 @@
+<%= form_with(model: @complaint, local: true) do |form| %>
+  <% if @complaint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@complaint.errors.count, "error") %> prohibited this @complaint from being saved:</h2>
+      <ul>
+      <% @complaint.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div class="form-group">
+    <br>
+    <%= form.label :complaint_type_id, "Complaint Type" %>
+    <%= form.select :complaint_type_id, options_from_collection_for_select(@complaint_types, :id, :name), { prompt: "Select Complaint Type" } %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :proof_image %>
+    <%= form.file_field :proof_image %><br>
+  </div>
+
+  <div id="map" style="height: 400px;">
+    <br>
+    <%= form.hidden_field :latitude, id: "@complaint_latitude" %>
+    <%= form.hidden_field :longitude, id: "@complaint_longitude" %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= javascript_include_tag "https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" %>
+<%= stylesheet_link_tag "https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const map = L.map("map").setView([28.6139, 77.2090], 13); // Default: Delhi
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+    let marker;
+
+    map.on("click", function (e) {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+
+      document.getElementById("@complaint_latitude").value = lat;
+      document.getElementById("@complaint_longitude").value = lng;
+
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
+      marker = L.marker([lat, lng]).addTo(map);
+    });
+  });
+</script>

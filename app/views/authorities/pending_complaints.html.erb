@@ -1,0 +1,39 @@
+<%= link_to 'Back to Dashboard', authority_dashboard_path, class: 'btn btn-secondary' %>
+<div class="complaints-container">
+  <h2 class="section-title">Pending Complaints</h2>
+  
+  <% if @pending_complaints.empty? %>
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>No pending complaints to review at the moment.</p>
+    </div>
+  <% else %>
+    <div class="table-responsive">
+      <table class="complaints-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Submitted By</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @pending_complaints.each do |complaint| %>
+            <tr>
+              <td><span class="complaint-type"><%= complaint.complaint_type.name %></span></td>
+              <td><div class="description-cell"><%= complaint.description %></div></td>
+              <td><%= complaint.user.email %></td>
+              <td><span class="status-badge status-<%= complaint.status.downcase %>"><%= complaint.status %></span></td>
+              <td class="actions-cell">
+                <%= link_to 'View', show_pending_complaint_path(complaint), class: 'action-btn view-btn' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+<br><br>

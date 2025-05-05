@@ -1,0 +1,116 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h1>Welcome Back</h1>
+    <div class="login-options">
+      <a href="<%= new_normal_user_session_path %>" class="btn btn-user">
+        <span class="icon">👤</span> User Login
+      </a>
+      <a href="<%= new_authority_session_path %>" class="btn btn-admin">
+        <span class="icon">🔒</span> Administrator Login
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f7fc;
+    padding: 0 20px;
+  }
+  
+  .login-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 3rem;
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+    border: 1px solid #eaeaea;
+  }
+
+  .login-container h1 {
+    color: #333;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .login-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #fff;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .btn-user {
+    background-color: #4361ee;
+    box-shadow: 0 5px 20px rgba(67, 97, 238, 0.2);
+  }
+
+  .btn-user:hover {
+    background-color: #3a56d4;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+  }
+
+  .btn-admin {
+    background-color: #3a0ca3;
+    box-shadow: 0 5px 20px rgba(58, 12, 163, 0.2);
+  }
+
+  .btn-admin:hover {
+    background-color: #2d0a80;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(58, 12, 163, 0.3);
+  }
+
+  .icon {
+    margin-right: 12px;
+    font-size: 1.4rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Add media queries for responsiveness */
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 2rem;
+      width: 90%;
+    }
+
+    .btn {
+      font-size: 1rem;
+    }
+
+    .login-container h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>

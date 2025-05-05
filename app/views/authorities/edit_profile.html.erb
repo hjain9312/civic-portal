@@ -1,0 +1,30 @@
+<div class="profile-edit-container">
+  <h2 class="section-title">Edit Your Profile</h2>
+  
+  <%= form_for(@authority, url: edit_authority_profile_path, html: { method: :patch, class: "profile-form" }) do |f| %>
+    <div class="form-field">
+      <%= f.label :name, "Full Name" %>
+      <%= f.text_field :name, class: "form-input", placeholder: "Enter your full name" %>
+    </div>
+    
+    <div class="form-field">
+      <%= f.label :email, "Email Address" %>
+      <%= f.email_field :email, class: "form-input", placeholder: "Enter your email" %>
+    </div>
+    
+    <div class="form-field">
+      <%= f.label :password, "New Password" %>
+      <%= f.password_field :password, class: "form-input", placeholder: "Leave blank if you don't want to change it" %>
+    </div>
+    
+    <div class="form-field">
+      <%= f.label :password_confirmation, "Confirm New Password" %>
+      <%= f.password_field :password_confirmation, class: "form-input", placeholder: "Confirm new password" %>
+    </div>
+    
+    <div class="form-actions">
+      <%= f.submit "Update Profile", class: "btn-primary" %>
+      <%= link_to 'Back to Dashboard', authority_dashboard_path, class: "btn-secondary" %>
+    </div>
+  <% end %>
+</div>

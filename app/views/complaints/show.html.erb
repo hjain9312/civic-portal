@@ -1,0 +1,45 @@
+<!-- app/views/authorities/show_complaint.html.erb -->
+<div class="complaint-details">
+  <h2>Complaint Details</h2>
+  <div class="complaint-info">
+    <div class="detail-row">
+      <strong>Title:</strong>
+      <p><%= @complaint.title %></p>
+    </div>
+
+    <div class="detail-row">
+      <strong>Description:</strong>
+      <p><%= @complaint.description %></p>
+    </div>
+
+    <div class="detail-row">
+      <strong>Status:</strong>
+      <p><%= @complaint.status.capitalize %></p>
+    </div>
+
+    <div class="detail-row">
+      <strong>Complaint Type:</strong>
+      <p><%= @complaint.complaint_type&.name || "N/A" %></p>
+    </div>
+
+    <div class="detail-row">
+      <strong>Address:</strong>
+      <p><%= @complaint.address.presence || "N/A" %></p>
+    </div>
+
+    <div class="detail-row">
+      <strong>Location:</strong>
+      <% if @complaint.latitude.present? && @complaint.longitude.present? %>
+        <p>
+          <%= link_to "View on Map", "https://www.google.com/maps?q=#{@complaint.latitude},#{@complaint.longitude}", target: "_blank", rel: "noopener" %>
+        </p>
+      <% else %>
+        <p>No Location Provided</p>
+      <% end %>
+    </div> 
+
+    <div class="action-buttons mt-3">
+      <%= link_to "Back to Dashboard", authority_dashboard_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

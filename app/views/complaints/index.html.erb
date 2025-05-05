@@ -1,0 +1,228 @@
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --success-color: #4cc9f0;
+      --info-color: #4895ef;
+      --warning-color: #f72585;
+      --danger-color: #7209b7;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+    }
+    
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
+    
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, #4361ee, #3a0ca3);
+      padding: 1.25rem 1.5rem;
+      border-bottom: none;
+    }
+    
+    .card-header h4 {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .table thead th {
+      border-top: none;
+      border-bottom: 2px solid #eaeaea;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.5px;
+      padding: 1rem 1.5rem;
+      color: #495057;
+    }
+    
+    .table tbody td {
+      padding: 1rem 1.5rem;
+      vertical-align: middle;
+      border-color: #eaeaea;
+    }
+    
+    .badge {
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+    }
+    
+    .badge.bg-type-info {
+      background-color: rgba(72, 149, 239, 0.15) !important;
+      color: #4895ef !important;
+    }
+    
+    .badge.bg-status-pending {
+      background-color: rgba(247, 37, 133, 0.15) !important;
+      color: #f72585 !important;
+    }
+    
+    .badge.bg-status-resolved {
+      background-color: rgba(76, 201, 240, 0.15) !important;
+      color: #4cc9f0 !important;
+    }
+    
+    .badge.bg-status-rejected {
+      background-color: rgba(114, 9, 183, 0.15) !important;
+      color: #7209b7 !important;
+    }
+    
+    .action-btn {
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-resolve {
+      background-color: #4cc9f0;
+      border-color: #4cc9f0;
+      color: white;
+    }
+    
+    .btn-resolve:hover:not(:disabled) {
+      background-color: #33b4db;
+      border-color: #33b4db;
+    }
+    
+    .btn-reject {
+      background-color: #f72585;
+      border-color: #f72585;
+      color: white;
+    }
+    
+    .btn-reject:hover:not(:disabled) {
+      background-color: #e01470;
+      border-color: #e01470;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .complaint-title {
+      font-weight: 500;
+      color: #212529;
+    }
+    
+    .actions-cell {
+      min-width: 180px;
+    }
+    
+    .search-container {
+      position: relative;
+      max-width: 300px;
+    }
+    
+    .search-container input {
+      padding-left: 40px;
+      border-radius: 20px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      color: #adb5bd;
+    }
+    
+    .card-body {
+      padding: 0;
+    }
+    
+    .dashboard-header {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eaeaea;
+    }
+    
+    .pagination-container {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #eaeaea;
+    }
+    
+    .page-link {
+      border-radius: 8px;
+      margin: 0 3px;
+      color: #4361ee;
+    }
+    
+    .page-item.active .page-link {
+      background-color: #4361ee;
+      border-color: #4361ee;
+    }
+    
+    .empty-state {
+      padding: 3rem;
+      text-align: center;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      color: #dee2e6;
+      margin-bottom: 1rem;
+    }
+  </style>
+  <div class="dashboard-container">
+    <%= link_to 'Back to homepage', authority_dashboard_path, class: 'btn btn-secondary' %>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+              <tbody>
+                  <% @complaints.each do |complaint| %>
+                    <tr>
+                      <td><%= complaint.complaint_type.name %></td>
+                      <td><%= complaint.description %></td>
+                      <td class="status"><%= complaint.status %></td>
+                      <td class="text-center">
+                        <%= link_to "View", authority_complaint_path(complaint), class: "btn btn-outline-primary btn-sm" %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

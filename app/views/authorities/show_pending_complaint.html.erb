@@ -1,0 +1,18 @@
+<h1>Complaint Details</h1>
+<p><strong>ID:</strong> <%= @complaint.id %></p>
+<p><strong>Title:</strong> <%= @complaint.title %></p>
+<p><strong>Description:</strong> <%= @complaint.description %></p>
+<p><strong>Status:</strong> <%= @complaint.status %></p>
+<p><strong>Submitted At:</strong> <%= @complaint.created_at.strftime("%d %B %Y, %I:%M %p") %></p>
+<br>
+<% if !["Resolved", "Rejected"].include?(@complaint.status.to_s.strip) %>
+  <%= link_to 'Resolve', resolve_complaint_path(@complaint), method: :put, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+  <%= link_to 'Reject', reject_complaint_path(@complaint), method: :put, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+
+<% else %>
+  <p><em>This complaint has already been <strong><%= @complaint.status %></strong>.</em></p>
+<% end %>
+
+<br>
+<br>
+<%= link_to 'Back to All Complaints', complaints_path, class: 'btn btn-secondary' %>

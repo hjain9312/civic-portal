@@ -1,0 +1,27 @@
+<div class="dashboard-container">
+  <div class="welcome-header">
+    <h1>Welcome, <%= @user.email %></h1>
+  </div>
+  
+  <div class="navigation-tabs">
+    <%= link_to complaints_path, class: 'nav-tab' do %>
+      <span class="tab-icon">📋</span>
+      <span class="tab-text">All Complaints</span>
+    <% end %>
+    
+    <%= link_to pending_complaints_path, class: 'nav-tab' do %>
+      <span class="tab-icon">⏳</span>
+      <span class="tab-text">Pending Complaints</span>
+    <% end %>
+    
+    <%= link_to authority_profile_path, class: 'nav-tab' do %>
+      <span class="tab-icon">👤</span>
+      <span class="tab-text">Profile</span>
+    <% end %>
+    
+    <%= link_to edit_authority_profile_path, class: 'nav-tab' do %>
+      <span class="tab-icon">✏️</span>
+      <span class="tab-text">Edit Profile</span>
+    <% end %>
+  </div>
+</div>
