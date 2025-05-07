@@ -1,64 +1,62 @@
-<div class="content-wrapper">
-  <h1 class="edit-profile-heading">
-    <i class="fas fa-user-edit"></i> Edit Your Profile
-  </h1>
-  
-  <div class="edit-profile-form">
-    <%= form_for(@profile, url: update_normal_user_profile_path, method: :patch) do |f| %>
-      <div class="form-row">
-        <div class="form-group">
-          <%= f.label :name, "Full Name" %>
-          <div class="input-icon-wrapper">
-            <i class="fas fa-user input-icon"></i>
-            <%= f.text_field :name, class: "form-control", required: true %>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <%= f.label :email, "Email Address" %>
-          <div class="input-icon-wrapper">
-            <i class="fas fa-envelope input-icon"></i>
-            <%= f.email_field :email, class: "form-control", required: true %>
-          </div>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <%= f.label :current_password, "Current Password" %>
-        <div class="input-icon-wrapper">
-          <i class="fas fa-lock input-icon"></i>
-          <%= f.password_field :current_password, class: "form-control", required: true, placeholder: "Required to update profile" %>
-        </div>
-      </div>
-      
-      <div class="form-divider">
-        <span>Password Update (Optional)</span>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <%= f.label :password, "New Password" %>
-          <div class="input-icon-wrapper">
-            <i class="fas fa-key input-icon"></i>
-            <%= f.password_field :password, class: "form-control", placeholder: "Leave blank if unchanged" %>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <%= f.label :password_confirmation, "Confirm New Password" %>
-          <div class="input-icon-wrapper">
-            <i class="fas fa-key input-icon"></i>
-            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Leave blank if unchanged" %>
-          </div>
-        </div>
-      </div>
-      
-      <div class="form-actions">
-        <%= f.submit "Update Profile", class: "btn btn-success" %>
-        <%= link_to normal_user_profile_path, class: "btn btn-secondary" do %>
-          <i class="fas fa-times"></i> Cancel
-        <% end %>
-      </div>
-    <% end %>
+<div class="edit-profile-container">
+  <div class="edit-profile-header">
+    <h1>
+      <i class="fas fa-user-edit"></i> Edit Your Profile
+    </h1>
   </div>
+
+  <%= form_for(@profile, url: update_normal_user_profile_path, method: :patch, class: "edit-profile-form") do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "Full Name" %>
+      <div class="input-icon-wrapper">
+        <i class="fas fa-user input-icon"></i>
+        <%= f.text_field :name, class: "form-control", required: true, placeholder: "Enter your full name" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, "Email Address" %>
+      <div class="input-icon-wrapper">
+        <i class="fas fa-envelope input-icon"></i>
+        <%= f.email_field :email, class: "form-control", required: true, placeholder: "Enter your email address" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :current_password, "Current Password" %>
+      <div class="input-icon-wrapper">
+        <i class="fas fa-lock input-icon"></i>
+        <%= f.password_field :current_password, class: "form-control", required: true, placeholder: "Required to update profile" %>
+      </div>
+    </div>
+
+    <div class="form-divider">
+      <span>Password Update (Optional)</span>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <%= f.label :password, "New Password" %>
+        <div class="input-icon-wrapper">
+          <i class="fas fa-key input-icon"></i>
+          <%= f.password_field :password, class: "form-control", placeholder: "Leave blank if unchanged" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Confirm New Password" %>
+        <div class="input-icon-wrapper">
+          <i class="fas fa-check input-icon"></i>
+          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Leave blank if unchanged" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit-profile-actions">
+      <%= f.submit "Update Profile", class: "btn btn-primary" %>
+      <%= link_to normal_user_profile_path, class: "btn btn-secondary" do %>
+        <i class="fas fa-times"></i> Cancel
+      <% end %>
+    </div>
+  <% end %>
 </div>

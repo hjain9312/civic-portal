@@ -7,8 +7,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # Process authority login
   def create_authority
-    print(params)
-    login_user('authority')
+    process_login(:user, User, authority_dashboard_path, :new_authority, 'authority')
   end
 
   # New normal user login form
@@ -19,30 +18,31 @@ class Users::SessionsController < Devise::SessionsController
 
   # Process normal user login
   def create_normal_user
-    login_user('normal_user')
+    process_login(:user, User, normal_user_dashboard_path, :new_normal_user, 'normal_user')
   end
 
   private
 
-  # Common logic for both authority and normal user login
-  def login_user(role)
-    # Check for the presence of parameters
-    email = params.dig(:user, :email)
-    password = params.dig(:user, :password)
+  # Common logic for login
+  def process_login(scope, model, success_redirect_path, failure_render_view, role = nil)
+    email = params.dig(scope, :email)
+    password = params.dig(scope, :password)
 
     if email.blank? || password.blank?
-      flash[:alert] = "Email and password can't be blank"
-      return render role == 'authority' ? :new_authority : :new_normal_user
+      flash.now[:alert] = "Email and password can't be blank"
+      instance_variable_set("@#{scope}", model.new(email: email))
+      return render failure_render_view, status: :unprocessable_entity
     end
 
-    @user = User.find_by(email: email)
+    user = model.find_by(email: email)
 
-    if @user && @user.role == role && @user.valid_password?(password)
-      sign_in @user
-      redirect_to role == 'authority' ? authority_dashboard_path : normal_user_dashboard_path
+    if user && (role.nil? || user.role == role) && user.valid_password?(password)
+      sign_in(scope, user)
+      redirect_to success_redirect_path, notice: "Logged in successfully as #{role&.titleize || scope.to_s.titleize}."
     else
-      flash[:alert] = "Invalid email or password for #{role.titleize}"
-      render role == 'authority' ? :new_authority : :new_normal_user
+      flash.now[:alert] = "Invalid email or password"
+      instance_variable_set("@#{scope}", model.new(email: email))
+      render failure_render_view, status: :unprocessable_entity
     end
   end
 end

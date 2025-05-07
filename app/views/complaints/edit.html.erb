@@ -1,36 +1,46 @@
-<!-- edit.html.erb -->
 <div class="complaint-edit-form">
   <h2>Edit Complaint</h2>
   
-  <%= form_for @complaint do |f| %>
+  <%= form_with(model: @complaint, local: true) do |f| %>
+    <% if @complaint.errors.any? %>
+      <div id="error_explanation">
+        <h3><%= pluralize(@complaint.errors.count, "error") %> prohibited this complaint from being saved:</h3>
+        <ul>
+          <% @complaint.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="form-group">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: "form-control", placeholder: "Enter complaint title" %>
+      <%= f.label :title, "Title" %>
+      <%= f.text_field :title, class: "form-control", placeholder: "Enter complaint title", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :description %>
-      <%= f.text_area :description, class: "form-control", placeholder: "Describe the issue", rows: 4 %>
+      <%= f.label :description, "Description" %>
+      <%= f.text_area :description, class: "form-control", placeholder: "Describe the issue", rows: 4, required: true %>
     </div>
 
     <div class="form-group">
       <%= f.label :complaint_type_id, "Complaint Type" %>
-      <%= f.collection_select :complaint_type_id, ComplaintType.all, :id, :name, { prompt: "Select Complaint Type" }, class: "form-control" %>
+      <%= f.collection_select :complaint_type_id, ComplaintType.all, :id, :name, { prompt: "Select Complaint Type" }, class: "form-control", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :address %>
-      <%= f.text_field :address, class: "form-control", placeholder: "Enter address" %>
+      <%= f.label :address, "Address" %>
+      <%= f.text_field :address, class: "form-control", placeholder: "Enter address", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :latitude %>
-      <%= f.text_field :latitude, class: "form-control", placeholder: "Latitude" %>
+      <%= f.label :latitude, "Latitude" %>
+      <%= f.text_field :latitude, class: "form-control", placeholder: "Latitude", required: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :longitude %>
-      <%= f.text_field :longitude, class: "form-control", placeholder: "Longitude" %>
+      <%= f.label :longitude, "Longitude" %>
+      <%= f.text_field :longitude, class: "form-control", placeholder: "Longitude", required: true %>
     </div>
 
     <div class="form-group">

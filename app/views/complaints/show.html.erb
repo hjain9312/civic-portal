@@ -1,20 +1,19 @@
-<!-- app/views/authorities/show_complaint.html.erb -->
 <div class="complaint-details">
   <h2>Complaint Details</h2>
   <div class="complaint-info">
     <div class="detail-row">
       <strong>Title:</strong>
-      <p><%= @complaint.title %></p>
+      <p><%= @complaint.title.presence || "N/A" %></p>
     </div>
 
     <div class="detail-row">
       <strong>Description:</strong>
-      <p><%= @complaint.description %></p>
+      <p><%= @complaint.description.presence || "N/A" %></p>
     </div>
 
     <div class="detail-row">
       <strong>Status:</strong>
-      <p><%= @complaint.status.capitalize %></p>
+      <p><%= @complaint.status.capitalize.presence || "N/A" %></p>
     </div>
 
     <div class="detail-row">
@@ -36,10 +35,77 @@
       <% else %>
         <p>No Location Provided</p>
       <% end %>
-    </div> 
+    </div>
+
+    <div class="detail-row">
+      <strong>Proof Image:</strong>
+      <% if @complaint.proof_image.attached? %>
+        <p><%= image_tag @complaint.proof_image, class: "proof-image" %></p>
+      <% else %>
+        <p>No Proof Image Provided</p>
+      <% end %>
+    </div>
 
     <div class="action-buttons mt-3">
       <%= link_to "Back to Dashboard", authority_dashboard_path, class: "btn btn-secondary" %>
     </div>
   </div>
 </div>
+
+<style>
+  .complaint-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .complaint-info {
+    margin-top: 20px;
+  }
+
+  .detail-row {
+    margin-bottom: 15px;
+  }
+
+  .detail-row strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .proof-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .action-buttons {
+    text-align: center;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+</style>

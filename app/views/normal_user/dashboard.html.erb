@@ -36,7 +36,7 @@
         </div>
         <div class="summary-info">
           <h3>Total Complaints</h3>
-          <p class="summary-count"><%= @complaints_count %></p>
+          <p class="summary-count"><%= @complaints_count || 0 %></p>
         </div>
       </div>
       
@@ -46,7 +46,7 @@
         </div>
         <div class="summary-info">
           <h3>Pending</h3>
-          <p class="summary-count"><%= @pending_count %></p>
+          <p class="summary-count"><%= @pending_count || 0 %></p>
         </div>
       </div>
       
@@ -56,7 +56,7 @@
         </div>
         <div class="summary-info">
           <h3>Resolved</h3>
-          <p class="summary-count"><%= @resolved_count %></p>
+          <p class="summary-count"><%= @resolved_count || 0 %></p>
         </div>
       </div>
     </div>

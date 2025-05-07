@@ -1,47 +1,49 @@
 <%= form_with(model: @complaint, local: true) do |form| %>
   <% if @complaint.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@complaint.errors.count, "error") %> prohibited this @complaint from being saved:</h2>
+      <h2><%= pluralize(@complaint.errors.count, "error") %> prohibited this complaint from being saved:</h2>
       <ul>
-      <% @complaint.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @complaint.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
   <div class="form-group">
-    <br>
+    <%= form.label :title, "Title" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :complaint_type_id, "Complaint Type" %>
-    <%= form.select :complaint_type_id, options_from_collection_for_select(@complaint_types, :id, :name), { prompt: "Select Complaint Type" } %>
+    <%= form.select :complaint_type_id, options_from_collection_for_select(@complaint_types, :id, :name), { prompt: "Select Complaint Type" }, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, "Description" %>
+    <%= form.text_area :description, class: "form-control", rows: 5, required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address, required: true %>
+  <div class="form-group">
+    <%= form.label :address, "Address" %>
+    <%= form.text_field :address, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :proof_image %>
-    <%= form.file_field :proof_image %><br>
+  <div class="form-group">
+    <%= form.label :proof_image, "Upload Proof Image" %>
+    <%= form.file_field :proof_image, class: "form-control" %>
   </div>
 
-  <div id="map" style="height: 400px;">
-    <br>
-    <%= form.hidden_field :latitude, id: "@complaint_latitude" %>
-    <%= form.hidden_field :longitude, id: "@complaint_longitude" %>
+  <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+
+  <div class="form-group">
+    <%= form.hidden_field :latitude, id: "complaint_latitude" %>
+    <%= form.hidden_field :longitude, id: "complaint_longitude" %>
   </div>
-  <div>
-    <%= form.submit %>
+
+  <div class="form-group">
+    <%= form.submit "Submit Complaint", class: "btn btn-primary" %>
   </div>
 <% end %>
 
@@ -51,7 +53,9 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const map = L.map("map").setView([28.6139, 77.2090], 13); // Default: Delhi
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
     let marker;
 
@@ -59,8 +63,8 @@
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
 
-      document.getElementById("@complaint_latitude").value = lat;
-      document.getElementById("@complaint_longitude").value = lng;
+      document.getElementById("complaint_latitude").value = lat;
+      document.getElementById("complaint_longitude").value = lng;
 
       if (marker) {
         map.removeLayer(marker);
